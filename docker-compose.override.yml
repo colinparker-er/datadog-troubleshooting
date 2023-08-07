@@ -5,9 +5,25 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
+      - DD_ENV=core-local
+      - DD_VERSION=1.0.0
+      - DD_SERVICE=DatadogApi
+      - DD_AGENT_HOST=datadog-agent
+      - DD_TRACE_AGENT_PORT=8126
+      - CORECLR_ENABLE_PROFILING=1
+      - CORECLR_PROFILER={846F5F1C-F9AE-4B07-969E-05C26BC060D8}
+      - CORECLR_PROFILER_PATH=/app/bin/Debug/net6.0/datadog/linux-x64/Datadog.Trace.ClrProfiler.Native.so
+      - LD_PRELOAD=/app/bin/Debug/net6.0/datadog/linux-x64/Datadog.Linux.ApiWrapper.x64.so
+      - DD_DOTNET_TRACER_HOME=/app/bin/Debug/net6.0/datadog
+      - DD_TRACE_DEBUG=true
+      - DD_TRACE_ENABLED=true
+      - DD_PROFILING_ENABLED=1
+      - DD_TRACE_STARTUP_LOGS=true 
     ports:
       - "80"
       - "443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - ./logfiles/datadog:/var/log/datadog
+ 

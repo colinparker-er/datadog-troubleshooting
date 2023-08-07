@@ -6,3 +6,7 @@ services:
     build:
       context: .
       dockerfile: DatadogApi/Dockerfile
+networks:
+  default:
+    name: platform
+    external: true
